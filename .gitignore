@@ -1,0 +1,14 @@
+.vscode/
+.*/
+
+
+build/
+
+*.a
+*.so
+
+*.dll
+*.lib
+res/*.py
+
+*.pro.user

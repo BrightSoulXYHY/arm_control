@@ -1,0 +1,61 @@
+
+QWidget {background-color: #282B4D;}
+
+QPushButton 
+{
+/*    color:red;
+    background-color:rgb(30,75,10);*/
+    background-color: #AFEEEE;
+  
+}
+
+QPushButton:pressed
+{
+    color:white;
+    background-color: #0095d3;
+    padding-left:3px;
+    padding-top:3px;
+}
+
+
+QLabel {color:white;}
+
+
+
+QTextEdit {
+    color: white;
+    background-color: #414339;
+    font-size: 18px;
+}
+
+QGroupBox {
+    color:white;
+}
+
+
+
+
+QTableWidget::item 
+{            
+    color: white;
+    background-color: #282B4D;
+    border-right: 1px solid #dcdcdc; 
+    border-bottom: 1px solid #dcdcdc; 
+}
+
+QHeaderView::section, QTableCornerButton:section
+{    
+    color: white;
+    background-color: #282B4D;
+    border: 1px solid #dcdcdc; 
+}
+
+
+QListWidget{
+    color:white
+}
+
+
+QScrollBar::handle:horizontal,QScrollBar::handle:vertical {
+	background: gray;
+}
