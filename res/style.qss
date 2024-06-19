@@ -22,7 +22,7 @@ QLabel {color:white;}
 
 
 
-QTextEdit {
+QTextEdit,QLineEdit {
     color: white;
     background-color: #414339;
     font-size: 18px;
@@ -52,7 +52,8 @@ QHeaderView::section, QTableCornerButton:section
 
 
 QListWidget{
-    color:white
+    color:white;
+    background-color: #414339;
 }
 
 

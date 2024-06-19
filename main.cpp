@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
 	qss.close();
 
      
-    // ros::NodeHandle nh_;
 
     MainWidget w;
     
@@ -58,13 +57,13 @@ int main(int argc, char *argv[])
     // w.setWindowIcon(icon);
     
     w.show();
-    // if ( !ros::master::check() ) 
-    // {   
-    //     w.show_no_master();
-    //     return -1;
-	// }
-    // std::cout << "ros master ok!" << std::endl;
-    // w.init_ros();
+    if ( !ros::master::check() ) 
+    {   
+        w.show_no_master();
+        return -1;
+	}
+    std::cout << "ros master ok!" << std::endl;
+    w.init_ros();
     // w.init_rviz_show();
     return a.exec();
 }

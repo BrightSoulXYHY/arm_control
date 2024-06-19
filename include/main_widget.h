@@ -2,19 +2,24 @@
 
 #include <QWidget>
 #include <QTimer>
-// #include <QStringListModel>
 #include <QMessageBox>
-
-
 #include <QRandomGenerator>
+#include <QStringList>
+
+
+#include "ui_main.h"
 
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 
+#include <ros/ros.h>
+#include <moveit_msgs/MoveGroupActionGoal.h>
 
-#include "ui_main.h"
+#include <std_msgs/String.h>
+
 
 #include "bs_list_item.h"
 
@@ -34,9 +39,16 @@ public:
     MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
 
+    void show_no_master();
+    void show_pt_target_update_error();
 
+    void init_ros();
+
+    // void goalCallback(const std_msgs::String::ConstPtr& msg);
+    void goalCallback(const moveit_msgs::MoveGroupActionGoal::ConstPtr& msg);
 
 public slots:
+  void ros_timer_update();
   void pt_target_update();
   void pt_target_remove();
   void sim_plan_traj();
@@ -50,10 +62,13 @@ private:
 
 
     Ui::MainWidget *ui;
+    QTimer *ros_timer = new QTimer(this);
 
     QRandomGenerator random_gen = QRandomGenerator();
 
-    // QStringListModel logging_model;
+
+    ros::NodeHandlePtr nh_;
+    ros::Subscriber goal_sub_;
 
 };
 

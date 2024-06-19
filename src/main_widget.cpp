@@ -9,7 +9,7 @@ MainWidget::MainWidget(QWidget *parent)
     init_qt_connection();
 
 
-
+    // 初始化表格的
     int rowCount = ui->dataTable->rowCount();
     int columnCount = ui->dataTable->columnCount();
     qDebug() << "rowCount:" << rowCount;
@@ -22,23 +22,18 @@ MainWidget::MainWidget(QWidget *parent)
             auto* item = new QTableWidgetItem(QString::asprintf("%.4f",0));
             item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
             ui->dataTable->setItem(row, column, item);
-            // qDebug() << "item:" << item->text();
-
-            // item->setText(QString::asprintf("%.4f",0));
         }
     }
 
 
 
-    // load_config();
-
-
-    // ros_timer = new QTimer(this);
 
     // std::map<std::string,std::string> remappings;
-	// remappings["__master"] = yaml_cfg["master_url"].as<std::string>();
-	// remappings["__hostname"] = yaml_cfg["ros_ip"].as<std::string>();
-	// ros::init(remappings,"bs_arm_control_ros_node");
+	// remappings["__master"] = "http://127.0.0.1:11311/";
+	// remappings["__hostname"] = "127.0.0.1";
+
+    int argc = 0; char **argv = NULL;
+	ros::init(argc, argv, "bs_arm_control_node");
      
 
 }
@@ -48,6 +43,8 @@ MainWidget::~MainWidget(){delete ui;}
 
 void MainWidget::init_qt_connection()
 {
+    connect(ros_timer, SIGNAL(timeout()), this, SLOT(ros_timer_update()));
+
     connect(ui->ptAddButton, SIGNAL(clicked()), this, SLOT(pt_target_update()));
     connect(ui->ptDelButton, SIGNAL(clicked()), this, SLOT(pt_target_remove()));
     connect(ui->simPlanButton, SIGNAL(clicked()), this, SLOT(sim_plan_traj()));
@@ -57,26 +54,57 @@ void MainWidget::init_qt_connection()
 }
 
 
-// void MainWidget::show_no_master()
-// {
-//     QMessageBox msgBox;
-// 	msgBox.setText("Couldn't find the ros master.");
-// 	msgBox.exec();
-//     close();
-// }
+
 
 
 
 void MainWidget::pt_target_update()
 {
+    // float px,py,pz;
+    // float qw,qx,qy,qz;
+    std::vector<float> numbers;
+
+    auto input_text = ui->ptLineEdit->text();
+    QStringList input_parts = input_text.split(",", QString::SkipEmptyParts);
+    if(input_parts.size() != 7)
+    {
+        show_pt_target_update_error();
+        return;
+    }
+    else
+    {
+        for(auto input_part:input_parts)
+        {
+            bool input_valid;
+            float number = input_part.trimmed().toFloat(&input_valid);
+            if(!input_valid)
+            {
+                show_pt_target_update_error();
+                break;
+            }
+            numbers.push_back(number);
+        }
+    }
+
     Pose pose;
-    pose.px = random_gen.generateDouble();
-    pose.py = random_gen.generateDouble();
-    pose.pz = random_gen.generateDouble();
+    pose.px = numbers[0];
+    pose.py = numbers[1];
+    pose.pz = numbers[2];
+    pose.qw = numbers[3];
+    pose.qx = numbers[4];
+    pose.qy = numbers[5];
+    pose.qz = numbers[6];
+
     auto* item = new BSListWidgetItem(pose);
     ui->ptListWidget->addItem(item);
 }
 
+void MainWidget::show_pt_target_update_error()
+{
+    QMessageBox msgBox;
+	msgBox.setText("输入格式不正确！");
+	msgBox.exec();
+}
 
 
 void MainWidget::pt_target_remove()
