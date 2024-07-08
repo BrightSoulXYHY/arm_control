@@ -1,0 +1,10 @@
+<launch>
+    <arg name="mcs_tcp_topic" default="/vrpn_client_node/Rigid0/pose" />
+    <arg name="mcs_rd_topic" default="/vrpn_client_node/Rigid1/pose" />
+    <param name="test_topic" type="string" value="test" />
+
+    <node pkg="bs_arm_control" type="bs_arm_control" name=""  output="screen">
+        <param name="mcs_tcp_topic" type="string" value="$(arg mcs_tcp_topic)" />
+        <param name="mcs_rd_topic" type="string" value="$(arg mcs_rd_topic)" />
+    </node>
+</launch>

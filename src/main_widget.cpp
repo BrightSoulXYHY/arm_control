@@ -47,6 +47,11 @@ void MainWidget::init_qt_connection()
 
     connect(ui->ptAddButton, SIGNAL(clicked()), this, SLOT(pt_target_update()));
     connect(ui->ptDelButton, SIGNAL(clicked()), this, SLOT(pt_target_remove()));
+
+    connect(ui->simAddRvizButton, SIGNAL(clicked()), this, SLOT(rviz_pt_update()));
+    connect(ui->simAddMcsButton, SIGNAL(clicked()), this, SLOT(mcs_pt_update()));
+
+
     connect(ui->simPlanButton, SIGNAL(clicked()), this, SLOT(sim_plan_traj()));
     // connect(ui->mapSwitchBtn, SIGNAL(clicked()), this, SLOT(switch_rviz()));
     // connect(ui->vehicleSwitchBtn, SIGNAL(clicked()), this, SLOT(switch_vehicle()));
@@ -115,30 +120,19 @@ void MainWidget::pt_target_remove()
 }
 
 
-void MainWidget::sim_plan_traj()
+void MainWidget::rviz_pt_update()
 {
-    std::vector<Pose> pt_poses;
-    for (int i = 0; i < ui->ptListWidget->count(); ++i) 
-    {
-        auto *cnt_item = ui->ptListWidget->item(i);
-        auto *bs_item = dynamic_cast<BSListWidgetItem *>(cnt_item);
-
-        pt_poses.push_back(bs_item->getPose());
-    }
-    
-
-    for ( auto pt_pose:pt_poses )
-    {
-       qDebug() << QString::asprintf(
-            "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f", 
-            pt_pose.px,
-            pt_pose.py,
-            pt_pose.pz,
-            pt_pose.qw,
-            pt_pose.qx,
-            pt_pose.qz,
-            pt_pose.qy
-        );
-    }
-    
+    // 添加来自rviz的路点
+    auto* item = new BSListWidgetItem(rviz_pose_tgt_);
+    ui->ptListWidget->addItem(item);
 }
+
+
+void MainWidget::mcs_pt_update()
+{
+    // 添加来自mcs的路点
+    auto* item = new BSListWidgetItem(mcs_pose_tgt_);
+    ui->ptListWidget->addItem(item);
+}
+
+

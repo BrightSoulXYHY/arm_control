@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
-    <height>520</height>
+    <width>860</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,18 +19,32 @@
      <property name="title">
       <string>仿真控制</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="3">
+       <widget class="QPushButton" name="simExecButton">
+        <property name="text">
+         <string>执行</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="simAddRvizButton">
+        <property name="text">
+         <string>添加仿真路点</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
        <widget class="QPushButton" name="simPlanButton">
         <property name="text">
          <string>规划</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="simExecButton">
+      <item row="1" column="1">
+       <widget class="QPushButton" name="simAddMcsButton">
         <property name="text">
-         <string>执行</string>
+         <string>添加动捕路点</string>
         </property>
        </widget>
       </item>
@@ -48,7 +62,7 @@
         <item>
          <widget class="QTableWidget" name="dataTable">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -56,7 +70,7 @@
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>110</height>
+            <height>150</height>
            </size>
           </property>
           <property name="verticalScrollBarPolicy">
@@ -112,6 +126,14 @@
           <row>
            <property name="text">
             <string>动捕系统位姿</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>动捕路点位姿</string>
            </property>
            <property name="textAlignment">
             <set>AlignCenter</set>
@@ -284,7 +306,7 @@
         <item>
          <widget class="QPushButton" name="ptAddButton">
           <property name="text">
-           <string>添加</string>
+           <string>添加手动路点</string>
           </property>
          </widget>
         </item>

@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QRandomGenerator>
 #include <QStringList>
-
+#include <QDebug>
 
 #include "ui_main.h"
 
@@ -46,11 +46,18 @@ public:
 
     // void goalCallback(const std_msgs::String::ConstPtr& msg);
     void goalCallback(const moveit_msgs::MoveGroupActionGoal::ConstPtr& msg);
+    void mcsTcpPoseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg);
+    void mcsRdPoseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg);
 
 public slots:
   void ros_timer_update();
+
   void pt_target_update();
   void pt_target_remove();
+
+  void rviz_pt_update();
+  void mcs_pt_update();
+
   void sim_plan_traj();
 //   void switch_rviz();
 //   void switch_vehicle();
@@ -59,7 +66,7 @@ public slots:
 private:
 
     void init_qt_connection();
-
+    void taele_line_update(Pose pose);
 
     Ui::MainWidget *ui;
     QTimer *ros_timer = new QTimer(this);
@@ -69,6 +76,12 @@ private:
 
     ros::NodeHandlePtr nh_;
     ros::Subscriber goal_sub_;
+    ros::Subscriber rviz_pose_sub_;
+    ros::Subscriber mcs_tcp_pose_sub_;
+    ros::Subscriber mcs_rd_pose_sub_;
+
+    Pose rviz_pose_tgt_;
+    Pose mcs_pose_tgt_;
 
 };
 
